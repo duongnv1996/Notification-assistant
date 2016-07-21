@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Notification Assistant</string>
+    <string name="title_notification">Notification</string>
+    <string name="key_api_translate">AIzaSyB8Qi2Vkw_XqKtKGcmelAmTWh1ZMaDr2G0</string>
+    <string name="key_api_translate2">AIzaSyAztf0UwszeJ13kXdOnqEEIWrBVp_qXEOE</string>
+
+    <string name="key_name_msd">SpeakNotification1</string>
+    <string name="key_secret_msd">taFXWZ8zl4VN1kkgImP4KPxIgVTut4Epc7cpW1v1B14=</string>
+    <string name="dang_xu_ly">Đang xử lý...</string>
+    <string name="signal">;</string>
+    <string name="chung">Chung</string>
+    <string name="bat_tat">Bật trợ lý ảo</string>
+    <string name="ten">Tên hiển thị</string>
+    <string name="ngon_ngu">Ngôn Ngữ</string>
+</resources>
