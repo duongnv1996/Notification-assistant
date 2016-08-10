@@ -12,4 +12,5 @@
     <string name="bat_tat">Bật trợ lý ảo</string>
     <string name="ten">Tên hiển thị</string>
     <string name="ngon_ngu">Ngôn Ngữ</string>
+    <string name="accept_permisson">Cấp quyền truy cập</string>
 </resources>

@@ -63,6 +63,8 @@ public class ApplicationActivity extends AppCompatActivity {
             }
             data = data.subSequence(0, data.length() - 1).toString();
             SharedPref.getInstance(this).putString(Constants.LIST_APP, data);
+        }else{
+            SharedPref.getInstance(this).putString(Constants.LIST_APP, "");
         }
 
 
@@ -90,9 +92,7 @@ public class ApplicationActivity extends AppCompatActivity {
             final List pkgAppsList = getPackageManager().queryIntentActivities(mainIntent, 0);
             ResolveInfoComparator resolveInfoComparator = new ResolveInfoComparator(getPackageManager());
             Collections.sort(pkgAppsList, resolveInfoComparator);
-            String[] listPackageChecked = SharedPref.getInstance(getBaseContext())
-                                                    .getString(Constants.LIST_APP, "")
-                                                     .split(getApplicationContext()
+            String[] listPackageChecked = SharedPref.getInstance(getBaseContext()).getString(Constants.LIST_APP, "").split(getApplicationContext()
                                                              .getString(R.string.signal));
             for (Object object : pkgAppsList) {
                 ResolveInfo info = (ResolveInfo) object;

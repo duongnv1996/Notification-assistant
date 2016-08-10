@@ -49,12 +49,7 @@ public class AdapterApplication extends RecyclerView.Adapter<AdapterApplication.
             holder.mTvName.setText(app.getmName());
             holder.mCheckbox.setOnCheckedChangeListener(null);
             holder.mCheckbox.setChecked(sparseBooleanArray.get(position));
-            holder.mCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    setCheckedApp(isChecked, position, app);
-                }
-            });
+
             holder.mRoot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -66,6 +61,13 @@ public class AdapterApplication extends RecyclerView.Adapter<AdapterApplication.
                         holder.mCheckbox.setChecked(true);
                     }
 
+                }
+            });
+
+            holder.mCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    setCheckedApp(isChecked, position, app);
                 }
             });
         }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.duongkk.speakingnotification.Utils.LogX;
+import com.duongkk.speakingnotification.service.NotificationService;
 import com.memetix.mst.language.Language;
 import com.memetix.mst.translate.Translate;
 
@@ -32,9 +33,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
              pack = intent.getStringExtra("package");
              title = intent.getStringExtra("title");
              text = intent.getStringExtra("text");
-          //  AsynTasTranslate asynTasTranslate= new AsynTasTranslate();
-       //   asynTasTranslate.execute(text);
-          //  speak(text);
+            AsynTasTranslate asynTasTranslate= new AsynTasTranslate();
+          asynTasTranslate.execute(text);
+            speak(text);
 //            TranslateV2 t = new TranslateV2();
 //            try {
 //                TranslateV2.setKey(getString(R.string.key_api_translate));
@@ -52,8 +53,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tts =new TextToSpeech(this,this);
         mTv = (TextView)findViewById(R.id.tv);
+        tts =new TextToSpeech(this,this);
+        startService(new Intent(this, NotificationService.class));
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver,new IntentFilter("Msg"));
     }
 
@@ -119,4 +121,5 @@ void speak(String text){
             speak(s);
         }
     }
+
 }

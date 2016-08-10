@@ -9,11 +9,12 @@ import android.os.Bundle;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.speech.tts.TextToSpeech;
-import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
 import com.duongkk.speakingnotification.R;
+import com.duongkk.speakingnotification.Utils.Constants;
 import com.duongkk.speakingnotification.Utils.LogX;
+import com.duongkk.speakingnotification.Utils.SharedPref;
 import com.memetix.mst.language.Language;
 import com.memetix.mst.translate.Translate;
 
@@ -38,28 +39,38 @@ public class NotificationService extends NotificationListenerService implements 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
      //   super.onNotificationPosted(sbn);
-        String pack = sbn.getPackageName();
+        if(SharedPref.getInstance(this).getBoolean(Constants.ENABLE_APP,true)) {
+            String pack = sbn.getPackageName();
+            LogX.e(pack.toString());
+            String[] listPackageChecked = SharedPref.getInstance(getBaseContext()).getString(Constants.LIST_APP, "").split(getApplicationContext()
+                    .getString(R.string.signal));
+            LogX.e(listPackageChecked.toString());
+            for (int i = 0; i < listPackageChecked.length; i++) {
+                if(pack.equals(listPackageChecked[i])){
+                    //String tag = sbn.getTag();
+                    Bundle bundle = null;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                        bundle = sbn.getNotification().extras;
+                    }
+                    String title = bundle.getString("android.title");
+                    String text = bundle.getString("android.text").toString();
+                    LogX.e("Package : " + pack);
+                    //  LogX.e("tag : "+tag);
+                    LogX.e("title : " + title);
+                    LogX.e("text : " + text);
+                    Intent intent = new Intent("Msg");
+                    intent.putExtra("package", pack);
+                    //  intent.putExtra("ticker", ticker);
+                    intent.putExtra("title", title);
+                    intent.putExtra("text", text);
+                    AsynTasTranslate asynTasTranslate = new AsynTasTranslate();
+                    asynTasTranslate.execute(text);
+                    //LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                    break;
+                }
+            }
 
-
-        //String tag = sbn.getTag();
-
-        Bundle bundle = sbn.getNotification().extras;
-        String title = bundle.getString("android.title");
-        String text = bundle.getString("android.text").toString();
-
-        LogX.e("Package : "+pack);
-     //  LogX.e("tag : "+tag);
-        LogX.e("title : "+title);
-        LogX.e("text : "+text);
-        Intent intent = new Intent("Msg");
-        intent.putExtra("package", pack);
-      //  intent.putExtra("ticker", ticker);
-        intent.putExtra("title", title);
-        intent.putExtra("text", text);
-        AsynTasTranslate asynTasTranslate = new AsynTasTranslate();
-        asynTasTranslate.execute(text);
-        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-
+        }
     }
 
     @Override
